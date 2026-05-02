@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopa — Discover & Share Real-World Deals</title>
+    <meta name="description" content="Shopa is the social shopping app where you share photos of real-world deals, hidden gems, and great finds with a community of savvy shoppers.">
+    <link rel="canonical" href="https://corvusdevs.github.io/Shopa/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://corvusdevs.github.io/Shopa/">
+    <meta property="og:title" content="Shopa — Discover & Share Real-World Deals">
+    <meta property="og:description" content="Snap a photo of a deal, share it with the community, and discover what others are finding nearby. Swipe, save, collect, and level up.">
+    <meta property="og:image" content="https://corvusdevs.github.io/Shopa/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Shopa — Discover & Share Real-World Deals">
+    <meta name="twitter:description" content="The social shopping app. Share finds, swipe deals, earn badges, and join a community of savvy shoppers.">
+    <meta name="twitter:image" content="https://corvusdevs.github.io/Shopa/og-image.png">
+    <meta name="robots" content="index, follow">
+    <meta name="keywords" content="deals, shopping, social, discover, finds, bargains, sale, community, share, photos, savings, thrift">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Shopa",
+        "description": "A social shopping discovery app where you share photos of real-world deals, hidden gems, and great finds with a community of savvy shoppers.",
+        "operatingSystem": "iOS 17.0+, iPadOS 17.0+",
+        "applicationCategory": "LifestyleApplication",
+        "applicationSubCategory": "Shopping",
+        "downloadUrl": "https://apps.apple.com/app/id6761318401",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": { "@type": "Organization", "name": "CorvusDevs", "url": "https://corvusdevs.github.io" }
+    }
+    </script>
+    <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icon.png">
+    <style>
+        :root {
+            --bg: #0a0a0c;
+            --surface: #111114;
+            --surface-2: #19191e;
+            --border: #252530;
+            --text: #e8e8ed;
+            --text-secondary: #7c7c84;
+            --accent: #10b981;
+            --accent-light: #34d399;
+            --accent-dim: rgba(16, 185, 129, 0.1);
+            --accent-glow: rgba(16, 185, 129, 0.06);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 12, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+        }
+
+        .nav-brand {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-brand img {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: block;
+        }
+
+        .nav-brand span { color: var(--accent); }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 140px 24px 80px;
+            position: relative;
+            overflow: visible;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1000px;
+            height: 1000px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 28px;
+            margin-bottom: 28px;
+            position: relative;
+            border: 2px solid var(--border);
+            box-shadow: 0 0 60px 20px rgba(16, 185, 129, 0.2), 0 0 120px 50px rgba(16, 185, 129, 0.08);
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 800;
+            letter-spacing: -3px;
+            line-height: 1.05;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .hero .subtitle {
+            font-size: 19px;
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto 40px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 14px;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hero-cta:hover {
+            filter: brightness(1.15);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
+        }
+
+        .hero-cta svg { width: 20px; height: 20px; }
+
+        .hero-free {
+            display: block;
+            margin-top: 14px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #10b981 0%, #34d399 40%, #fff 100%);
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        /* Section Labels */
+        .section-label {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 44px;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: -1.5px;
+            margin-bottom: 56px;
+            line-height: 1.1;
+        }
+
+        /* Features Grid */
+        .features {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 40px 24px 100px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--accent-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+        }
+        .feature-icon svg { width: 24px; height: 24px; }
+
+        .feature-card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 60px 24px 100px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 56px;
+        }
+
+        .step {
+            text-align: center;
+        }
+
+        .step-num {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: var(--accent-dim);
+            color: var(--accent);
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .step h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Why Section */
+        .why {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px 100px;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .why-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+        }
+
+        .why-card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .why-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Stats Banner */
+        .stats {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px 100px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            text-align: center;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px 16px;
+        }
+
+        .stat-num {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* Requirements */
+        .req {
+            text-align: center;
+            padding: 0 24px 60px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 40px 24px 60px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-brand .logo {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .footer-brand .logo span { color: var(--accent); }
+
+        .footer-brand p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .footer-col h4 {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+        }
+
+        .footer-col a {
+            display: block;
+            font-size: 14px;
+            color: var(--text);
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover { color: var(--accent); }
+
+        .footer-bottom {
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-socials a {
+            color: var(--text-secondary);
+            transition: color 0.2s;
+        }
+
+        .footer-socials a:hover { color: var(--text); }
+
+        .footer-socials svg { width: 18px; height: 18px; }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .features-grid, .why-grid { grid-template-columns: repeat(2, 1fr); }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 40px; letter-spacing: -2px; }
+            .hero .subtitle { font-size: 16px; }
+            .hero { padding-top: 120px; }
+            .section-title { font-size: 30px; }
+            .features-grid, .steps, .why-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+            .footer-bottom { flex-direction: column; gap: 12px; }
+            nav { padding: 14px 16px; }
+            .nav-links { gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Nav -->
+    <nav>
+        <a href="https://corvusdevs.github.io" class="nav-brand">
+            <img src="https://avatars.githubusercontent.com/u/25494090?v=4" alt="CorvusDevs">
+            Corvus<span>Devs</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how">How it works</a></li>
+            <li><a href="#why">Why Shopa</a></li>
+            <li><a href="mailto:corvusdevs@outlook.com">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <img src="icon.png" alt="Shopa" class="hero-icon">
+        <h1>Discover Deals.<br>Share Finds.</h1>
+        <p class="subtitle">Shopa is the social shopping app where you share photos of real-world deals, hidden gems, and great finds with a community of savvy shoppers.</p>
+        <a href="https://apps.apple.com/app/id6761318401" class="hero-cta">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Download on the App Store
+        </a>
+        <span class="hero-free">Free &middot; iOS 17.0+ &middot; iPhone & iPad</span>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats fade-in">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-num">50</div>
+                <div class="stat-label">Badges to earn</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num">18</div>
+                <div class="stat-label">Filters & adjustments</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num">18</div>
+                <div class="stat-label">Languages</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num">10</div>
+                <div class="stat-label">Levels to master</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="section-label fade-in">Features</div>
+        <h2 class="section-title gradient-text fade-in">Everything you need to find and share deals</h2>
+
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="7.5 4.21 12 6.81 16.5 4.21"/><polyline points="7.5 19.79 7.5 14.6 3 12"/><polyline points="21 12 16.5 14.6 16.5 19.79"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                </div>
+                <h3>Swipe Discovery</h3>
+                <p>A full-screen card stack for browsing finds. Swipe left to skip, right to like. Fast, fun, and addictive.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                </div>
+                <h3>Smart Feed</h3>
+                <p>Browse deals with For You, Trending, Following, Nearby, and Newest sort modes plus category filters.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                </div>
+                <h3>Photo Editor</h3>
+                <p>18 filters, brightness, contrast, saturation, warmth, sharpness, vignette, crop, and more. Make every find look great.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <h3>Collections</h3>
+                <p>Save finds to custom boards with icons, colors, and access controls. Share boards with friends or keep them private.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <h3>Social</h3>
+                <p>Comments, star reviews, likes, shoutouts, digital gifts, direct messaging, @mentions, and rich link sharing.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </div>
+                <h3>Search</h3>
+                <p>Find items, people, stores, and tags instantly. Store autocomplete powered by Apple Maps.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <h3>Gamification</h3>
+                <p>Earn XP, level up through 10 ranks, unlock 50 badges, complete daily and seasonal challenges, and climb the leaderboards.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <h3>Coin Shop</h3>
+                <p>Nickname colors, avatar frames, banners, emoji packs, XP boosts, streak savers, mystery boxes, and more.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </div>
+                <h3>Bounties</h3>
+                <p>Post a "Find It For Me" request with a photo, budget, and preferred stores. Other shoppers earn rewards for finding it.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+                <h3>Streaks & Spin Wheel</h3>
+                <p>Maintain daily posting streaks with savers and calendars. Spin the wheel daily for coins, XP boosts, and mystery rewards.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </div>
+                <h3>Widgets & Siri</h3>
+                <p>Streak and Find of the Day widgets for your Home Screen. Siri Shortcuts for posting, discovering, and more.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h3>Privacy & Safety</h3>
+                <p>Trust scores, AI content filtering, verified finds, photo metadata stripping, and a full moderation system.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="how-it-works" id="how">
+        <div class="section-label fade-in">How it works</div>
+        <h2 class="section-title gradient-text fade-in">Start finding deals in seconds</h2>
+
+        <div class="steps">
+            <div class="step fade-in">
+                <div class="step-num">1</div>
+                <h3>Snap a photo</h3>
+                <p>See a great deal or hidden gem? Take a photo, add the store and price, and share it with the community.</p>
+            </div>
+            <div class="step fade-in">
+                <div class="step-num">2</div>
+                <h3>Discover nearby</h3>
+                <p>Swipe through finds in a full-screen card stack or browse the feed sorted by Trending, Nearby, or For You.</p>
+            </div>
+            <div class="step fade-in">
+                <div class="step-num">3</div>
+                <h3>Save & collect</h3>
+                <p>Bookmark your favorites into custom boards. Follow stores, earn badges, level up, and build your reputation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Shopa -->
+    <section class="why" id="why">
+        <div class="section-label fade-in">Why Shopa</div>
+        <h2 class="section-title gradient-text fade-in">Built for real shoppers</h2>
+
+        <div class="why-grid">
+            <div class="why-card fade-in">
+                <h3>Real deals, real photos</h3>
+                <p>No affiliate links, no sponsored posts. Every find is a real photo from a real person at a real store. Verified by the community.</p>
+            </div>
+            <div class="why-card fade-in">
+                <h3>Works offline</h3>
+                <p>Your 50 most recent finds are cached for offline browsing. Posts and actions queue automatically and sync when you're back online.</p>
+            </div>
+            <div class="why-card fade-in">
+                <h3>Free to use</h3>
+                <p>All core features are free forever. The optional Shopa Pro subscription unlocks premium photo filters, discounted boosts, and exclusive cosmetics.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Requirements -->
+    <p class="req">Requires iOS 17.0 or later. Compatible with iPhone and iPad. Available in 18 languages.</p>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo"><img src="https://avatars.githubusercontent.com/u/25494090?v=4" alt="" style="width:22px;height:22px;border-radius:5px;vertical-align:middle;margin-right:6px;">Corvus<span>Devs</span></div>
+                <p>Indie software studio.<br>Building focused, privacy-first tools for Apple platforms.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="privacy">Privacy Policy</a>
+                <a href="terms">Terms of Service</a>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <a href="mailto:corvusdevs@outlook.com">corvusdevs@outlook.com</a>
+                <a href="https://github.com/CorvusDevs">GitHub</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 CorvusDevs. All rights reserved.</p>
+            <div class="footer-socials">
+                <a href="https://github.com/CorvusDevs" aria-label="GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>
